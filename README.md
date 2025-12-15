@@ -117,24 +117,29 @@ The Streamlit app allows:
 
 ## ⚙️ How to Run Locally
 
-### 1️> Install dependencies
-```bash
-pip install -r requirements.txt
+### 1️⃣ Install dependencies
 
-### 2> Train the model
-```bash
+pip install -r requirements.txt
+---
+
+### 2️⃣ Train the model
 python src/train.py
 
-### 3> Run Streamlit app
-```bash
+---
+
+### 3️⃣ Run Streamlit app
 streamlit run app/streamlit_app.py
 
-The app will open at:
-```bash
+---
+
+### 4️⃣ The app will open at:
 http://localhost:8501
 
-Example Inputs
-## Low-Risk Customer
+---
+
+
+📊 Example Inputs
+✅ Low-Risk Customer
 CreditScore: 780
 Age: 35
 Tenure: 7
@@ -148,23 +153,3 @@ EstimatedSalary: 90000
 Expected Output:
 
 Low Risk (Low churn probability)
-
-### Tech Stack
-Python
-Pandas, NumPy
-Scikit-learn
-Streamlit
-Joblib
-Git & GitHub
-
-###Future Improvements
-Add SHAP-based model explainability
-Input validation at UI level
-API-based inference using FastAPI
-Model monitoring and drift detection
-
-###Dataset
-Dataset sourced from Kaggle – Bank Customer Churn Modelling.
-
-###Author
-Samyak Jain
