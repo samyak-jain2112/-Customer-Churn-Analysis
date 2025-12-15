@@ -1,77 +1,167 @@
-# Customer Churn Analysis - EDA and Modeling
+# 📉 Customer Churn Prediction System
 
-## Overview
+An end-to-end **Customer Churn Prediction** project that moves beyond notebook experimentation to a **real-time inference system** using a trained ML model and an interactive **Streamlit web application**.
 
-This project focuses on Exploratory Data Analysis (EDA) and modeling to uncover insights from the data and build predictive models to understand Customer Churn.
+This project demonstrates the **complete ML lifecycle**:
+- Exploratory analysis & feature engineering  
+- Model training with preprocessing  
+- Real-time inference  
+- User-facing application  
 
-Customer churn, also known as customer attrition, refers to the phenomenon where customers stop doing business with a company or service. It is a critical metric for businesses as it directly impacts revenue and profitability. 
-High churn rates can indicate dissatisfaction with the product or service, poor customer experience.
+---
 
-## Dataset
+## 🚀 Project Motivation
 
-The dataset used in this project is [Data Source](https://www.kaggle.com/datasets/rjmanoj/credit-card-customer-churn-prediction/data).
+Customer churn directly impacts revenue in subscription-based and banking businesses.  
+The goal of this project is to **predict whether a customer is likely to churn**, using historical customer data and to expose the prediction through a **real-time UI**.
 
-It contains the following features: 
+Unlike basic notebook projects, this implementation focuses on:
+- **Training–inference consistency**
+- **Reusable feature engineering**
+- **Deployment-ready architecture**
 
- 1. RowNumber
- 2. CustomerId
- 3. Surname
- 4. CreditScore
- 5. Geography
- 6. Gender
- 7. Age
- 8. Tenure
- 9. Balance
- 10. NumOfProducts
- 11. HasCrCard
- 12. IsActiveMember
- 13. EstimatedSalary
- 14. Exited
+---
 
-The main variables of interest is **Exited**.
+## 🧠 Problem Statement
 
-## Requirements
+Given customer attributes such as:
+- Credit score  
+- Geography  
+- Account balance  
+- Engagement indicators (products, activity)  
 
-The following libraries are required to run the notebook:
+Predict the probability that a customer will **exit (churn)**.
 
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- scikit-learn
+---
 
-## Key Features
+## 🗂️ Project Structure
+Customer-Churn-Analysis/
+│
+├── data/
+│ └── raw/
+│ └── Churn_Modelling.csv
+│
+├── src/
+│ ├── data_validation.py
+│ ├── feature_engineering.py
+│ ├── preprocessing.py
+│ ├── model.py
+│ └── train.py
+│
+├── pipelines/
+│ └── inference_pipeline.py
+│
+├── app/
+│ └── streamlit_app.py
+│
+├── artifacts/
+│ └── model.pkl
+│
+├── notebooks/
+│ └── eda-and-modeling.ipynb
+│
+├── requirements.txt
+└── README.md
 
-1. Handling Imbalanced Data: The project implements techniques to help handle imbalanced data such as SMOTE, ensuring accurate predictions even when the dependent variable is underrepresented.
-2. Exploratory Data Analysis (EDA): The project features a stage of Exploratory Data Analysis (EDA), where we examine the data closely to identify trends and understand the reasons behind customer churn.
-3. Classification: The project employs a variety of models, including Logistic Regression, Random Forest, K-Nearest Neighbors, Support Vector Machine, XGBoost, and Gradient Boosting, to predict customer churn, with techniques such as class weighting and SMOTE used to handle class imbalance.
+---
 
-## Results
+## 🔬 Approach & Methodology
 
-| Model                   | Accuracy | Recall Score | F1 Score | ROC AUC Score |
-|-------------------------|----------|--------------|----------|---------------|
-| Logistic Regression     | 0.703667 | 0.683219     | 0.473029 | 0.764076      |
-| Random Forest           | 0.862000 | 0.414384     | 0.538976 | 0.852447      |
-| K-Nearest Neighbors     | 0.752333 | 0.667808     | 0.512147 | 0.776639      |
-| Support Vector Machine  | 0.785667 | 0.662671     | 0.546224 | 0.822503      |
-| XGBoost                 | 0.833000 | 0.609589     | 0.586974 | 0.841784      |
-| Gradient Boosting       | 0.817000 | 0.700342     | 0.598391 | 0.859767      |
+### 1️⃣ Data Validation
+- Ensures required columns are present  
+- Prevents training on malformed datasets  
 
-From the results of the classification models on the churn prediction dataset, we can infer the following:
+### 2️⃣ Feature Engineering
+Custom business-driven features:
+- **CreditUtilization** = Balance / CreditScore  
+- **BalanceToSalaryRatio**  
+- **InteractionScore** (products + activity + credit card)  
 
-1. **Gradient Boosting** has the highest F1 score (0.598391) and the highest ROC AUC score (0.859767) among all the models. This suggests that Gradient Boosting is the most effective model in balancing precision and recall and has the best ability to distinguish between the churned and non-churned customers.
+The **same feature logic** is reused for:
+- Training  
+- Real-time prediction  
 
-2. **XGBoost** also performs well, with a relatively high F1 score (0.586974) and a good ROC AUC score (0.841784). This indicates that XGBoost is another strong model for this task.
+➡️ This prevents training–inference mismatch.
 
-3. **Random Forest** has a high accuracy (0.862000) but a lower F1 score (0.538976) compared to Gradient Boosting and XGBoost. This suggests that while Random Forest is good at predicting the majority class (non-churned customers), it might not be as effective at identifying the minority class (churned customers).
+---
 
-4. **Support Vector Machine** and **K-Nearest Neighbors** have moderate F1 scores and ROC AUC scores. They perform better than Logistic Regression but are not as effective as Gradient Boosting or XGBoost for this dataset.
+### 3️⃣ Preprocessing & Model Training
+- Categorical encoding and scaling handled via an sklearn pipeline  
+- Multiple models were evaluated during experimentation  
+- Best-performing model selected and saved as a single artifact  
 
-5. **Logistic Regression** has the lowest accuracy (0.703667), F1 score (0.473029), and ROC AUC score (0.764076) among all the models. This indicates that Logistic Regression is the least effective model for predicting customer churn in this dataset.
+---
 
-#### Overall:
+### 4️⃣ Inference Pipeline
+- Loads the trained model  
+- Applies identical feature transformations  
+- Returns churn probability for unseen customer input  
 
-Gradient Boosting appears to be the best model for this churn prediction task, followed closely by XGBoost. These models are able to better handle the class imbalance and provide a good balance between precision and recall. 
+---
+
+### 5️⃣ Streamlit Application
+- Accepts real-time customer data  
+- Displays churn probability  
+- Categorizes customers into **Low / Medium / High Risk**  
+
+---
+
+## 🖥️ Streamlit App
+
+The Streamlit app allows:
+- Manual customer input  
+- Instant churn probability prediction  
+- Business-friendly risk interpretation  
+
+---
+
+## ⚙️ How to Run Locally
+
+### 1️> Install dependencies
+```bash
+pip install -r requirements.txt
+
+### 2> Train the model
+python src/train.py
+
+### 3> Run Streamlit app
+streamlit run app/streamlit_app.py
+
+The app will open at:
+http://localhost:8501
+
+Example Inputs
+## Low-Risk Customer
+CreditScore: 780
+Age: 35
+Tenure: 7
+Balance: 20000
+NumOfProducts: 2
+HasCrCard: 1
+IsActiveMember: 1
+EstimatedSalary: 90000
 
 
+Expected Output:
 
+Low Risk (Low churn probability)
+
+### Tech Stack
+Python
+Pandas, NumPy
+Scikit-learn
+Streamlit
+Joblib
+Git & GitHub
+
+###Future Improvements
+Add SHAP-based model explainability
+Input validation at UI level
+API-based inference using FastAPI
+Model monitoring and drift detection
+
+###Dataset
+Dataset sourced from Kaggle – Bank Customer Churn Modelling.
+
+###Author
+Samyak Jain
