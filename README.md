@@ -122,12 +122,15 @@ The Streamlit app allows:
 pip install -r requirements.txt
 
 ### 2> Train the model
+```bash
 python src/train.py
 
 ### 3> Run Streamlit app
+```bash
 streamlit run app/streamlit_app.py
 
 The app will open at:
+```bash
 http://localhost:8501
 
 Example Inputs
