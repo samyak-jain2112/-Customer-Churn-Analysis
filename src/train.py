@@ -24,6 +24,8 @@ def train():
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
+    joblib.dump(X_train.columns.tolist(), "artifacts/feature_names.pkl")
+    
     pipeline = Pipeline([
         ('preprocessor', get_preprocessor()),
         ('model', get_model())
@@ -32,7 +34,7 @@ def train():
     pipeline.fit(X_train, y_train)
     joblib.dump(pipeline, MODEL_PATH)
 
-    print(" Model trained and saved successfully")
+    print("Model trained and saved successfully")
 
 if __name__ == "__main__":
     train()

@@ -8,8 +8,11 @@ class ChurnPredictor:
     def __init__(self):
         self.model = joblib.load(MODEL_PATH)
 
-    def predict(self, input_data: dict):
+    def predict_proba(self, input_data: dict):
         df = pd.DataFrame([input_data])
         df = add_features(df)
         prob = self.model.predict_proba(df)[0][1]
         return prob
+
+    def get_model(self):
+        return self.model
