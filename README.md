@@ -1,155 +1,219 @@
-# 📉 Customer Churn Prediction System
+# 📉 Customer Churn Intelligence System
 
-An end-to-end **Customer Churn Prediction** project that moves beyond notebook experimentation to a **real-time inference system** using a trained ML model and an interactive **Streamlit web application**.
+An end-to-end **Customer Churn Intelligence** platform that goes beyond prediction to deliver **explainable insights and actionable retention intelligence** using **Machine Learning + GenAI**, deployed via an interactive **Streamlit application**.
 
-This project demonstrates the **complete ML lifecycle**:
-- Exploratory analysis & feature engineering  
-- Model training with preprocessing  
-- Real-time inference  
-- User-facing application  
+This project demonstrates how churn models can be transformed into **decision-support systems** rather than isolated predictive notebooks.
 
 ---
 
-## 🚀 Project Motivation
+##  Project Overview
 
-Customer churn directly impacts revenue in subscription-based and banking businesses.  
-The goal of this project is to **predict whether a customer is likely to churn**, using historical customer data and to expose the prediction through a **real-time UI**.
+Customer churn is one of the most critical business problems in banking and subscription-driven industries.  
+While most churn projects stop at prediction, this system focuses on:
 
-Unlike basic notebook projects, this implementation focuses on:
-- **Training–inference consistency**
-- **Reusable feature engineering**
-- **Deployment-ready architecture**
+- **Why a customer is likely to churn**
+- **How the risk can be interpreted in business terms**
+- **What retention actions can be considered**
+
+The system combines:
+- Traditional ML for churn prediction  
+- Rule-based + feature-driven explainability  
+- GenAI-powered natural language reasoning  
+- A real-time user-facing web application  
 
 ---
 
-## 🧠 Problem Statement
+##  Problem Statement
 
 Given customer attributes such as:
-- Credit score  
-- Geography  
-- Account balance  
-- Engagement indicators (products, activity)  
+- Credit score and demographics  
+- Account balance and salary  
+- Product usage and engagement behavior  
 
-Predict the probability that a customer will **exit (churn)**.
+The system aims to:
+1. Predict the probability of customer churn  
+2. Explain the churn risk in **business-friendly language**  
+3. Categorize customers into **Low / Medium / High churn risk**  
+4. Generate **intelligent insights** to support retention decisions  
 
 ---
 
-## 🗂️ Project Structure
-Customer-Churn-Analysis/
+##  System Architecture 
+
+```
+Raw Customer Data
+        ↓
+Feature Engineering
+        ↓
+ML Churn Model
+        ↓
+Inference Pipeline
+        ↓
+Explainability Layer
+        ↓
+GenAI Reasoning Engine
+        ↓
+Streamlit Intelligence Dashboard
+```
+
+---
+
+##  Project Structure
+
+```
+-CUSTOMER-CHURN-ANALYSIS/
+│
+├── app/
+│ └── streamlit_app.py # Streamlit UI
+│
+├── artifacts/ # Generated artifacts 
 │
 ├── data/
-│ └── raw/
-│ └── Churn_Modelling.csv
+│
+├── notebooks/
+│
+├── pipelines/
+│ ├── churn_intelligence_pipeline.py
+│ └── inference_pipeline.py
 │
 ├── src/
+│ ├── explainability/
+│ │ ├── feature_importance.py
+│ │ └── rule_explainer.py
+│ │
+│ ├── gen_ai/
+│ │ ├── llm_explainer.py
+│ │ ├── prompt_templates.py
+│ │ └── retention_agent.py
+│ │
 │ ├── data_validation.py
 │ ├── feature_engineering.py
 │ ├── preprocessing.py
 │ ├── model.py
 │ └── train.py
 │
-├── pipelines/
-│ └── inference_pipeline.py
+├── test/
 │
-├── app/
-│ └── streamlit_app.py
-│
-├── artifacts/
-│ └── model.pkl
-│
-├── notebooks/
-│ └── eda-and-modeling.ipynb
-│
+├── .env # Environment variables (not committed)
+├── .gitignore
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
-## 🔬 Approach & Methodology
+##  Methodology & Design Choices
 
 ### 1️⃣ Data Validation
-- Ensures required columns are present  
-- Prevents training on malformed datasets  
-
-### 2️⃣ Feature Engineering
-Custom business-driven features:
-- **CreditUtilization** = Balance / CreditScore  
-- **BalanceToSalaryRatio**  
-- **InteractionScore** (products + activity + credit card)  
-
-The **same feature logic** is reused for:
-- Training  
-- Real-time prediction  
-
-➡️ This prevents training–inference mismatch.
+- Schema and column checks before training  
+- Prevents silent failures due to malformed data  
 
 ---
 
-### 3️⃣ Preprocessing & Model Training
-- Categorical encoding and scaling handled via an sklearn pipeline  
-- Multiple models were evaluated during experimentation  
-- Best-performing model selected and saved as a single artifact  
+### 2️⃣ Feature Engineering
+Business-driven features designed to capture churn behavior:
+- **CreditUtilization** = Balance / CreditScore  
+- **BalanceToSalaryRatio**  
+- **EngagementScore** (products + activity + credit card ownership)  
+
+The **same feature logic** is reused across:
+- Training
+- Inference
+- Explainability  
+
+➡️ This ensures **training–inference consistency**.
+
+---
+
+### 3️⃣ Model Training
+- Scikit-learn pipelines used for preprocessing and modeling  
+- Multiple algorithms evaluated during experimentation  
+- Best-performing model selected based on business-aligned metrics  
+- Model artifacts generated via reproducible training scripts  
 
 ---
 
 ### 4️⃣ Inference Pipeline
-- Loads the trained model  
-- Applies identical feature transformations  
-- Returns churn probability for unseen customer input  
+- Loads trained model and feature metadata  
+- Applies identical transformations to unseen input  
+- Outputs churn probability with confidence interpretation  
 
 ---
 
-### 5️⃣ Streamlit Application
-- Accepts real-time customer data  
-- Displays churn probability  
-- Categorizes customers into **Low / Medium / High Risk**  
+### 5️⃣ Explainability Layer (No SHAP by Design)
+Instead of relying solely on technical explainability tools, the system focuses on:
+- Feature contribution reasoning  
+- Rule-based risk signals  
+- Human-readable explanations  
+
+This makes outputs understandable to **non-technical stakeholders**.
 
 ---
 
-## 🖥️ Streamlit App
-
-The Streamlit app allows:
-- Manual customer input  
-- Instant churn probability prediction  
-- Business-friendly risk interpretation  
+### 6️⃣ GenAI-Powered Intelligence
+A GenAI layer converts structured churn signals into:
+- Natural language explanations answering **“Why will this customer churn?”**
+- Context-aware reasoning based on customer profile  
 
 ---
 
-## ⚙️ How to Run Locally
+### 7️⃣ Streamlit Intelligence Dashboard
+The Streamlit application provides:
+- Real-time customer input  
+- Churn probability prediction  
+- Risk categorization (Low / Medium / High)  
+- Clear textual explanations of churn risk  
+
+---
+
+##  How to Run Locally
 
 ### 1️⃣ Install dependencies
-
+```bash
 pip install -r requirements.txt
+```
+
 ---
 
 ### 2️⃣ Train the model
+```bash
 python src/train.py
+```
 
 ---
 
-### 3️⃣ Run Streamlit app
-streamlit run app/streamlit_app.py
+### 3️⃣ Run the Streamlit app
+```bash
+streamlit run streamlit_app/streamlit_app.py
+```
 
 ---
 
-### 4️⃣ The app will open at:
+### 4️⃣ Access the app
+```
 http://localhost:8501
+```
 
 ---
 
+##  Environment Variables
 
-📊 Example Inputs
-✅ Low-Risk Customer
-CreditScore: 780
-Age: 35
-Tenure: 7
-Balance: 20000
-NumOfProducts: 2
-HasCrCard: 1
-IsActiveMember: 1
-EstimatedSalary: 90000
+Create a `.env` file locally:
+```
+GROQ_API_KEY=your_api_key_here
+```
 
+---
 
-Expected Output:
+##  Key Takeaways
 
-Low Risk (Low churn probability)
+- End-to-end ML + GenAI system  
+- Business-first explainability  
+- Production-aware design  
+- Interview-ready project  
+
+---
+
+##  Author
+**Samyak Jain**  
+B.Tech CSE | Data Science & Machine Learning

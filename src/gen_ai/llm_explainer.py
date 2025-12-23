@@ -21,13 +21,13 @@ Explain in simple business language why this customer may churn.
 
         try:
             response = self.client.chat.completions.create(
-                model="llama-3.1-8b-instant",  # fastest, least deprecated
+                model="llama-3.1-8b-instant",  
                 messages=[{"role": "user", "content": prompt}],
             )
             return response.choices[0].message.content
 
         except Exception as e:
-            # 🔥 FALLBACK (THIS IS IMPORTANT)
+            
             return (
                 "LLM explanation currently unavailable. "
                 "Based on rule-based analysis, the customer shows churn risk due to: "

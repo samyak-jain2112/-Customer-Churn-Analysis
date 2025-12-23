@@ -19,7 +19,6 @@ class FeatureImportanceExplainer:
     def get_top_features(self, top_k=5):
         estimator = self._get_final_estimator()
 
-        # 1️⃣ Importance nikaalo
         if hasattr(estimator, "feature_importances_"):
             importances = estimator.feature_importances_
 
@@ -29,13 +28,11 @@ class FeatureImportanceExplainer:
         else:
             raise ValueError("Model does not support feature importance")
 
-        # 2️⃣ SAFETY: length mismatch handle karo
         min_len = min(len(self.feature_names), len(importances))
 
         features = self.feature_names[:min_len]
         importances = importances[:min_len]
 
-        # 3️⃣ DataFrame banao (ab kabhi error nahi aayega)
         df = pd.DataFrame({
             "feature": features,
             "importance": importances

@@ -23,7 +23,7 @@ class RetentionAgent:
     def generate_strategy(self, explanation):
         try:
             response = self.client.chat.completions.create(
-                model="llama-3.1-8b-instant",  # ✅ supported & stable
+                model="llama-3.1-8b-instant",  
                 messages=[
                     {"role": "user", "content": retention_prompt(explanation)}
                 ],
@@ -33,7 +33,7 @@ class RetentionAgent:
             return response.choices[0].message.content
 
         except Exception:
-            #  FALLBACK – system should never crash
+          
             return (
                 "Suggested retention actions:\n"
                 "1. Increase engagement through personalized offers and communication.\n"
